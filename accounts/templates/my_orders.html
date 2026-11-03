@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - TOMOTO</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #fffaf5;
+        }
+        .gradient-bg {
+            background: linear-gradient(120deg, #f97316, #ef4444);
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+        <a href="{% url 'index' %}" class="text-3xl font-extrabold text-orange-500">
+            TOMOTO 🍅
+        </a>
+
+        <div class="flex gap-5 text-sm md:text-base">
+            <a href="{% url 'index' %}" class="font-semibold text-gray-700 hover:text-orange-500">Home</a>
+            <a href="{% url 'menu' %}" class="font-semibold text-gray-700 hover:text-orange-500">Food Menu</a>
+            <a href="{% url 'cart' %}" class="font-semibold text-gray-700 hover:text-orange-500">Cart</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Heading -->
+<section class="gradient-bg text-white text-center py-12 px-4">
+    <p class="uppercase tracking-widest text-sm font-semibold mb-3">Your TOMOTO Journey</p>
+    <h1 class="text-4xl md:text-5xl font-extrabold">My Orders 📦</h1>
+    <p class="mt-4 text-white/90">Track your delicious food orders in one place.</p>
+</section>
+
+<!-- Orders -->
+<section class="max-w-5xl mx-auto px-5 py-12">
+
+    {% for order in orders %}
+
+    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 md:p-8 mb-7">
+
+        <!-- Order Header -->
+        <div class="flex flex-wrap justify-between items-center gap-4">
+
+            <div>
+                <p class="text-sm text-gray-500">Order Number</p>
+                <h2 class="text-2xl font-extrabold text-gray-900">
+                    #{{ order.id }}
+                </h2>
+            </div>
+
+            <span class="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-bold">
+                {{ order.status }}
+            </span>
+
+        </div>
+
+        <div class="mt-4 text-sm text-gray-500">
+            <span class="font-semibold">Ordered on:</span>
+            {{ order.created_at }}
+        </div>
+
+        <hr class="my-6 border-gray-100">
+
+        <!-- Items -->
+        <h3 class="text-lg font-bold text-gray-900 mb-4">
+            🍽️ Order Items
+        </h3>
+
+        {% for key, item in order.items.items %}
+
+        <div class="flex justify-between items-center gap-3 py-3 border-b border-gray-100">
+            <div>
+                <p class="font-semibold text-gray-800">{{ item.name }}</p>
+                <p class="text-sm text-gray-500">Quantity: {{ item.quantity }}</p>
+            </div>
+
+            <span class="font-bold text-gray-800 whitespace-nowrap">
+                ₹{% widthratio item.price 1 item.quantity %}
+            </span>
+        </div>
+
+        {% endfor %}
+
+        <!-- Order Total -->
+        <div class="bg-orange-50 rounded-2xl p-5 mt-6">
+
+            <div class="flex justify-between items-center">
+                <span class="font-semibold text-gray-600">Payment Method</span>
+                <span class="font-semibold text-gray-900">{{ order.payment_method }}</span>
+            </div>
+
+            <div class="flex justify-between items-center mt-4 pt-4 border-t border-orange-200">
+                <span class="text-lg font-bold text-gray-900">Total Amount</span>
+                <span class="text-2xl font-extrabold text-orange-600">
+                    ₹{{ order.total }}
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <!-- Empty Orders -->
+    <div class="bg-white rounded-3xl shadow-sm text-center p-10 md:p-16">
+
+        <div class="text-7xl mb-5">📦</div>
+
+        <h2 class="text-3xl font-extrabold text-gray-900">
+            No Orders Yet!
+        </h2>
+
+        <p class="text-gray-500 mt-4">
+            You haven't placed any orders. Explore our food menu and order your favourites.
+        </p>
+
+    </div>
+
+    {% endfor %}
+
+    <!-- Order More -->
+    <div class="text-center mt-8">
+        <a href="{% url 'menu' %}"
+           class="inline-block gradient-bg hover:opacity-90 text-white font-bold px-9 py-4 rounded-full shadow-lg shadow-orange-200">
+            Order More Food →
+        </a>
+    </div>
+
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-950 text-white text-center py-8 px-4">
+    <h2 class="text-2xl font-extrabold text-orange-500">TOMOTO 🍅</h2>
+    <p class="text-gray-400 mt-3 text-sm">Fresh Food. Fast Delivery. Happy Moments.</p>
+    <p class="text-gray-500 text-xs mt-4">© 2026 TOMOTO. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

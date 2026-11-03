@@ -1,0 +1,466 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOMOTO | Food Menu</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #fffaf7;
+        }
+
+        .food-card {
+            transition: all 0.3s ease;
+        }
+
+        .food-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.10);
+        }
+
+        .food-image {
+            transition: transform 0.4s ease;
+        }
+
+        .food-card:hover .food-image {
+            transform: scale(1.06);
+        }
+
+        .image-container {
+            overflow: hidden;
+        }
+
+        .primary-btn {
+            background: #e94336;
+            transition: 0.3s;
+        }
+
+        .primary-btn:hover {
+            background: #c93227;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #e94336;
+            box-shadow: 0 0 0 3px rgba(233,67,54,0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-5 py-4 flex justify-between items-center">
+
+        <a href="{% url 'index' %}" class="text-3xl font-extrabold text-red-600">
+            TOMOTO 🍅
+        </a>
+
+        <div class="hidden md:flex items-center gap-8 font-medium text-gray-700">
+            <a href="{% url 'index' %}" class="hover:text-red-600">Home</a>
+            <a href="{% url 'menu' %}" class="text-red-600">Menu</a>
+            <a href="{% url 'cart' %}" class="hover:text-red-600">Cart 🛒</a>
+            <a href="{% url 'my_orders' %}" class="hover:text-red-600">My Orders</a>
+            <a href="{% url 'profile' %}" class="hover:text-red-600">Profile</a>
+        </div>
+
+        <a href="{% url 'cart' %}"
+           class="primary-btn text-white px-5 py-2 rounded-full font-semibold">
+            My Cart 🛒
+        </a>
+
+    </div>
+</nav>
+
+
+<!-- HERO SECTION -->
+<section class="bg-gradient-to-r from-red-600 to-orange-500 text-white py-16 px-5">
+
+    <div class="max-w-7xl mx-auto text-center">
+
+        <p class="uppercase tracking-widest text-sm font-semibold mb-3">
+            Fresh • Tasty • Delicious
+        </p>
+
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-5">
+            Explore Our Food Menu 🍕
+        </h1>
+
+        <p class="text-lg text-red-50 max-w-2xl mx-auto">
+            Discover delicious food made with love.
+            Your favourite meals are just one click away!
+        </p>
+
+        <a href="#food-menu"
+           class="inline-block mt-8 bg-white text-red-600 px-8 py-3 rounded-full font-bold hover:bg-gray-100">
+            Explore Foods ↓
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- FOOD MENU -->
+<section id="food-menu" class="max-w-7xl mx-auto px-5 py-14">
+
+    <div class="text-center mb-10">
+
+        <p class="text-red-600 font-semibold uppercase tracking-wider">
+            Our Special Menu
+        </p>
+
+        <h2 class="text-3xl md:text-4xl font-extrabold text-gray-800 mt-2">
+            Delicious Food For You
+        </h2>
+
+        <p class="text-gray-500 mt-3">
+            Choose your favourite food and order now!
+        </p>
+
+    </div>
+
+
+    <!-- SEARCH AND FILTER -->
+    <div class="bg-white p-5 rounded-2xl shadow-sm mb-10 grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <input
+            type="text"
+            id="foodSearch"
+            placeholder="🔍 Search your favourite food..."
+            class="w-full p-4 border border-gray-200 rounded-xl"
+        >
+
+        <select
+            id="categoryFilter"
+            class="w-full p-4 border border-gray-200 rounded-xl bg-white"
+        >
+            <option value="all">All Categories</option>
+            <option value="pizza">Pizza</option>
+            <option value="burger">Burger</option>
+            <option value="biryani">Biryani</option>
+            <option value="pasta">Pasta</option>
+            <option value="sandwich">Sandwich</option>
+            <option value="sides">Sides</option>
+        </select>
+
+    </div>
+
+
+    <!-- FOOD CARDS -->
+    <div id="foodContainer"
+         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+
+        <!-- PIZZA -->
+        <div class="food-card bg-white rounded-2xl shadow-sm overflow-hidden"
+             data-name="margherita pizza"
+             data-category="pizza">
+
+            <div class="image-container relative">
+                <img
+                    src="https://images.unsplash.com/photo-1579751626657-72bc17010498?w=600"
+                    alt="Margherita Pizza"
+                    class="food-image w-full h-56 object-cover"
+                >
+                <span class="absolute top-4 left-4 bg-white text-red-600 px-4 py-1 rounded-full text-sm font-bold">
+                    Popular
+                </span>
+            </div>
+
+            <div class="p-6">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xl font-bold text-gray-800">Margherita Pizza</h3>
+                    <span class="text-orange-500">★★★★★</span>
+                </div>
+
+                <p class="text-gray-500 text-sm mt-3">
+                    Delicious cheesy pizza with fresh toppings.
+                </p>
+
+                <div class="flex justify-between items-center mt-5">
+                    <span class="text-2xl font-extrabold text-red-600">₹199</span>
+                </div>
+
+                <form method="POST" action="{% url 'add_to_cart' %}" class="mt-4">
+                    {% csrf_token %}
+                    <input type="hidden" name="name" value="Margherita Pizza">
+                    <input type="hidden" name="price" value="199">
+                    <button type="submit" class="primary-btn text-white w-full py-3 rounded-xl font-semibold">
+                        Add to Cart 🛒
+                    </button>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- BURGER -->
+        <div class="food-card bg-white rounded-2xl shadow-sm overflow-hidden"
+             data-name="cheese burger"
+             data-category="burger">
+
+            <div class="image-container">
+                <img
+                    src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600"
+                    alt="Cheese Burger"
+                    class="food-image w-full h-56 object-cover"
+                >
+            </div>
+
+            <div class="p-6">
+                <h3 class="text-xl font-bold text-gray-800">Cheese Burger</h3>
+
+                <p class="text-gray-500 text-sm mt-3">
+                    Juicy burger loaded with cheese and fresh vegetables.
+                </p>
+
+                <div class="mt-5">
+                    <span class="text-2xl font-extrabold text-red-600">₹149</span>
+                </div>
+
+                <form method="POST" action="{% url 'add_to_cart' %}" class="mt-4">
+                    {% csrf_token %}
+                    <input type="hidden" name="name" value="Cheese Burger">
+                    <input type="hidden" name="price" value="149">
+                    <button type="submit" class="primary-btn text-white w-full py-3 rounded-xl font-semibold">
+                        Add to Cart 🛒
+                    </button>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- BIRYANI -->
+        <div class="food-card bg-white rounded-2xl shadow-sm overflow-hidden"
+             data-name="chicken biryani"
+             data-category="biryani">
+
+            <div class="image-container">
+                <img
+                    src="https://images.unsplash.com/photo-1633945274405-b6c8069047b0?w=600"
+                    alt="Chicken Biryani"
+                    class="food-image w-full h-56 object-cover"
+                >
+            </div>
+
+            <div class="p-6">
+                <h3 class="text-xl font-bold text-gray-800">Chicken Biryani</h3>
+
+                <p class="text-gray-500 text-sm mt-3">
+                    Authentic spicy chicken biryani with rich flavours.
+                </p>
+
+                <div class="mt-5">
+                    <span class="text-2xl font-extrabold text-red-600">₹249</span>
+                </div>
+
+                <form method="POST" action="{% url 'add_to_cart' %}" class="mt-4">
+                    {% csrf_token %}
+                    <input type="hidden" name="name" value="Chicken Biryani">
+                    <input type="hidden" name="price" value="249">
+                    <button type="submit" class="primary-btn text-white w-full py-3 rounded-xl font-semibold">
+                        Add to Cart 🛒
+                    </button>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- PASTA -->
+        <div class="food-card bg-white rounded-2xl shadow-sm overflow-hidden"
+             data-name="italian pasta"
+             data-category="pasta">
+
+            <div class="image-container">
+                <img
+                    src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=600"
+                    alt="Italian Pasta"
+                    class="food-image w-full h-56 object-cover"
+                >
+            </div>
+
+            <div class="p-6">
+                <h3 class="text-xl font-bold text-gray-800">Italian Pasta</h3>
+
+                <p class="text-gray-500 text-sm mt-3">
+                    Creamy Italian pasta prepared with delicious sauce.
+                </p>
+
+                <div class="mt-5">
+                    <span class="text-2xl font-extrabold text-red-600">₹179</span>
+                </div>
+
+                <form method="POST" action="{% url 'add_to_cart' %}" class="mt-4">
+                    {% csrf_token %}
+                    <input type="hidden" name="name" value="Italian Pasta">
+                    <input type="hidden" name="price" value="179">
+                    <button type="submit" class="primary-btn text-white w-full py-3 rounded-xl font-semibold">
+                        Add to Cart 🛒
+                    </button>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- SANDWICH -->
+        <div class="food-card bg-white rounded-2xl shadow-sm overflow-hidden"
+             data-name="club sandwich"
+             data-category="sandwich">
+
+            <div class="image-container">
+                <img
+                    src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600"
+                    alt="Club Sandwich"
+                    class="food-image w-full h-56 object-cover"
+                >
+            </div>
+
+            <div class="p-6">
+                <h3 class="text-xl font-bold text-gray-800">Club Sandwich</h3>
+
+                <p class="text-gray-500 text-sm mt-3">
+                    Fresh sandwich with tasty vegetables and filling.
+                </p>
+
+                <div class="mt-5">
+                    <span class="text-2xl font-extrabold text-red-600">₹129</span>
+                </div>
+
+                <form method="POST" action="{% url 'add_to_cart' %}" class="mt-4">
+                    {% csrf_token %}
+                    <input type="hidden" name="name" value="Club Sandwich">
+                    <input type="hidden" name="price" value="129">
+                    <button type="submit" class="primary-btn text-white w-full py-3 rounded-xl font-semibold">
+                        Add to Cart 🛒
+                    </button>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- FRIES -->
+        <div class="food-card bg-white rounded-2xl shadow-sm overflow-hidden"
+             data-name="french fries"
+             data-category="sides">
+
+            <div class="image-container">
+                <img
+                    src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600"
+                    alt="French Fries"
+                    class="food-image w-full h-56 object-cover"
+                >
+            </div>
+
+            <div class="p-6">
+                <h3 class="text-xl font-bold text-gray-800">French Fries</h3>
+
+                <p class="text-gray-500 text-sm mt-3">
+                    Crispy golden french fries with a tasty crunch.
+                </p>
+
+                <div class="mt-5">
+                    <span class="text-2xl font-extrabold text-red-600">₹99</span>
+                </div>
+
+                <form method="POST" action="{% url 'add_to_cart' %}" class="mt-4">
+                    {% csrf_token %}
+                    <input type="hidden" name="name" value="French Fries">
+                    <input type="hidden" name="price" value="99">
+                    <button type="submit" class="primary-btn text-white w-full py-3 rounded-xl font-semibold">
+                        Add to Cart 🛒
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- NO RESULTS -->
+    <p id="noResults" class="hidden text-center text-gray-500 text-lg mt-12">
+        😔 No food items found! Try another search.
+    </p>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-white py-8 px-5">
+
+    <div class="max-w-7xl mx-auto text-center">
+
+        <h2 class="text-2xl font-bold text-red-500">TOMOTO 🍅</h2>
+
+        <p class="text-gray-400 mt-2">
+            Delicious food, delivered with love.
+        </p>
+
+        <p class="text-gray-500 text-sm mt-5">
+            © 2026 TOMOTO. All Rights Reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<!-- SEARCH AND CATEGORY FILTER -->
+<script>
+
+    const searchInput = document.getElementById("foodSearch");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const foodCards = document.querySelectorAll(".food-card");
+    const noResults = document.getElementById("noResults");
+
+    function filterFoods() {
+
+        const searchText = searchInput.value.toLowerCase().trim();
+        const selectedCategory = categoryFilter.value;
+
+        let visibleCount = 0;
+
+        foodCards.forEach(card => {
+
+            const foodName = card.dataset.name;
+            const foodCategory = card.dataset.category;
+
+            const matchesSearch = foodName.includes(searchText);
+
+            const matchesCategory =
+                selectedCategory === "all" ||
+                foodCategory === selectedCategory;
+
+            if (matchesSearch && matchesCategory) {
+
+                card.classList.remove("hidden");
+                visibleCount++;
+
+            } else {
+
+                card.classList.add("hidden");
+
+            }
+
+        });
+
+        noResults.classList.toggle("hidden", visibleCount !== 0);
+
+    }
+
+    searchInput.addEventListener("input", filterFoods);
+    categoryFilter.addEventListener("change", filterFoods);
+
+</script>
+
+</body>
+</html>
