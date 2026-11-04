@@ -66,13 +66,32 @@
             TOMOTO 🍅
         </a>
 
-        <div class="hidden md:flex items-center gap-8 font-medium text-gray-700">
-            <a href="{% url 'index' %}" class="hover:text-red-600">Home</a>
-            <a href="{% url 'menu' %}" class="text-red-600">Menu</a>
-            <a href="{% url 'cart' %}" class="hover:text-red-600">Cart 🛒</a>
-            <a href="{% url 'my_orders' %}" class="hover:text-red-600">My Orders</a>
-            <a href="{% url 'profile' %}" class="hover:text-red-600">Profile</a>
-        </div>
+<div class="hidden md:flex items-center gap-6 font-medium text-gray-700">
+
+    <a href="{% url 'index' %}">Home</a>
+    <a href="{% url 'menu' %}">Menu</a>
+    <a href="{% url 'cart' %}">Cart 🛒</a>
+
+    {% if user.is_authenticated %}
+
+        <a href="{% url 'my_orders' %}">My Orders</a>
+        <a href="{% url 'profile' %}">Profile</a>
+
+        <span class="text-red-600 font-bold">
+            Hi, {{ user.username }} 👋
+        </span>
+
+        <a href="{% url 'logout' %}">Logout</a>
+
+    {% else %}
+
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+
+    {% endif %}
+
+</div>
+
 
         <a href="{% url 'cart' %}"
            class="primary-btn text-white px-5 py-2 rounded-full font-semibold">

@@ -2,7 +2,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Customer, Order
 
@@ -35,7 +34,7 @@ def register(request):
             messages.error(request, "Email already exists!")
             return redirect("register")
 
-        customer = Customer.objects.create_user(
+        Customer.objects.create_user(
             username=username,
             email=email,
             password=password
@@ -50,8 +49,8 @@ def register(request):
 # CUSTOMER LOGIN
 def customerlogin(request):
     if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
+        username = request.POST.get("username", "").strip()
+        password = request.POST.get("password", "")
 
         user = authenticate(
             request,
@@ -62,8 +61,8 @@ def customerlogin(request):
         if user is not None:
             login(request, user)
             return redirect("menu")
-        else:
-            messages.error(request, "Invalid username or password!")
+
+        messages.error(request, "Invalid username or password!")
 
     return render(request, "login.html")
 
@@ -116,26 +115,40 @@ def menu(request):
         }
     ]
 
-    return render(request, "menu.html", {"foods": foods})
+    return render(request, "menu.html", {
+        "foods": foods
+    })
 
 
 # ADD TO CART
 def add_to_cart(request):
     if request.method == "POST":
         name = request.POST.get("name")
-        price = int(request.POST.get("price", 0))
+        
+        try:
+            price = int(request.POST.get("price", 0))
+        except (ValueError, TypeError):
+            messages.error(request, "Invalid food price!")
+            return redirect("menu")
 
-        cart = request.session.get("cart", {})
+        if not name or price <= 0:
+            messages.error(request, "Invalid food item!")
+            return redirect("menu")
 
-        if name in cart:
-            cart[name]["quantity"] += 1
+        cart_items = request.session.get("cart", {})
+
+        if name in cart_items:
+            cart_items[name]["quantity"] += 1
         else:
-            cart[name] = {
+            cart_items[name] = {
+                "name": name,
                 "price": price,
                 "quantity": 1
             }
 
-        request.session["cart"] = cart
+        request.session["cart"] = cart_items
+        request.session.modified = True
+
         messages.success(request, "Item added to cart!")
 
     return redirect("menu")
@@ -144,46 +157,62 @@ def add_to_cart(request):
 # VIEW CART
 def cart(request):
     cart_items = request.session.get("cart", {})
+
     total = sum(
-        item["price"] * item["quantity"]
+        int(item["price"]) * int(item["quantity"])
+        for item in cart_items.values()
+    )
+
+    count = sum(
+        int(item["quantity"])
         for item in cart_items.values()
     )
 
     return render(request, "cart.html", {
         "cart_items": cart_items,
-        "total": total
+        "total": total,
+        "count": count
     })
 
 
 # UPDATE CART QUANTITY
 def update_cart(request, name):
-    cart_items = request.session.get("cart", {})
+    if request.method == "POST":
+        cart_items = request.session.get("cart", {})
 
-    if name in cart_items:
-        quantity = int(request.POST.get("quantity", 1))
+        if name in cart_items:
+            action = request.POST.get("action")
 
-        if quantity > 0:
-            cart_items[name]["quantity"] = quantity
-        else:
-            del cart_items[name]
+            if action == "increase":
+                cart_items[name]["quantity"] += 1
 
-    request.session["cart"] = cart_items
+            elif action == "decrease":
+                cart_items[name]["quantity"] -= 1
+
+                if cart_items[name]["quantity"] <= 0:
+                    del cart_items[name]
+
+        request.session["cart"] = cart_items
+        request.session.modified = True
+
     return redirect("cart")
 
 
 # REMOVE FROM CART
 def remove_from_cart(request, name):
-    cart_items = request.session.get("cart", {})
+    if request.method == "POST":
+        cart_items = request.session.get("cart", {})
 
-    if name in cart_items:
-        del cart_items[name]
+        if name in cart_items:
+            del cart_items[name]
 
-    request.session["cart"] = cart_items
+        request.session["cart"] = cart_items
+        request.session.modified = True
+
     return redirect("cart")
 
 
 # CHECKOUT
-
 @login_required(login_url="login")
 def checkout(request):
     cart_items = request.session.get("cart", {})
@@ -193,7 +222,7 @@ def checkout(request):
         return redirect("menu")
 
     total = sum(
-        item["price"] * item["quantity"]
+        int(item["price"]) * int(item["quantity"])
         for item in cart_items.values()
     )
 
@@ -230,6 +259,7 @@ def checkout(request):
         )
 
         request.session["cart"] = {}
+        request.session.modified = True
 
         return redirect("order_success", order_id=order.id)
 
@@ -277,10 +307,12 @@ def profile(request):
             id=request.user.id
         ).exists():
             messages.error(request, "Username already exists!")
+
         elif Customer.objects.filter(email=email).exclude(
             id=request.user.id
         ).exists():
             messages.error(request, "Email already exists!")
+
         else:
             request.user.username = username
             request.user.email = email

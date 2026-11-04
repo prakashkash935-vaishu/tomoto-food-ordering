@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOMOTO - Food Delivery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .hero {
+            background: linear-gradient(90deg, rgba(20,10,5,.88), rgba(20,10,5,.25)),
+            url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1600');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+
+<!-- NAVBAR -->
+
+<!-- NAVBAR -->
+<nav class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+        <a href="{% url 'index' %}" class="text-3xl font-extrabold text-red-600">
+            TOMOTO<span class="text-orange-500">.</span>
+        </a>
+
+        <div class="hidden md:flex gap-8 items-center font-medium text-gray-700">
+            <a href="{% url 'index' %}" class="hover:text-red-600">Home</a>
+            <a href="{% url 'whytomoto' %}" class="hover:text-red-600">About</a>
+            <a href="{% url 'menu' %}" class="hover:text-red-600">Menu</a>
+            <a href="/admin/" class="hover:text-red-600">Admin Login</a>
+        </div>
+
+        <div class="flex gap-3 items-center">
+            {% if user.is_authenticated %}
+                <a href="{% url 'my_orders' %}" class="text-gray-700 hover:text-red-600">My Orders</a>
+                <a href="{% url 'profile' %}" class="text-gray-700 hover:text-red-600">Profile</a>
+                <a href="{% url 'logout' %}" class="bg-red-600 text-white px-5 py-2 rounded-full">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="border border-red-600 text-red-600 px-4 py-2 rounded-full">Login</a>
+                <a href="{% url 'register' %}" class="bg-red-600 text-white px-5 py-2 rounded-full">Sign Up</a>
+            {% endif %}
+        </div>
+
+    </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="hero min-h-[550px] flex items-center">
+    <div class="max-w-7xl mx-auto px-6 w-full py-20">
+
+        <div class="max-w-2xl text-white">
+
+            <p class="text-orange-400 font-semibold tracking-widest mb-4">
+                DELICIOUS FOOD, DELIVERED FAST
+            </p>
+
+            <h1 class="text-5xl md:text-7xl font-extrabold leading-tight mb-6">
+                Taste The <span class="text-orange-400">Best</span>
+                Food In Town.
+            </h1>
+
+            <p class="text-gray-200 text-lg mb-8">
+                Discover delicious meals, fresh ingredients and amazing
+                flavours. Your favourite food is just one click away.
+            </p>
+
+            <a href="{% url 'menu' %}"
+               class="inline-block bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-full font-semibold shadow-lg">
+                Explore Our Menu →
+            </a>
+
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="max-w-7xl mx-auto px-6 py-20">
+
+    <div class="text-center mb-14">
+        <p class="text-red-600 font-semibold">WHY CHOOSE TOMOTO?</p>
+        <h2 class="text-4xl font-bold text-gray-900 mt-3">
+            We Serve Happiness
+        </h2>
+        <p class="text-gray-500 mt-3">
+            Great food and great service, every single time.
+        </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+
+        <div class="bg-white p-8 rounded-2xl shadow-sm text-center hover:shadow-lg transition">
+            <div class="text-5xl mb-5">🍔</div>
+            <h3 class="text-xl font-bold mb-3">Quality Food</h3>
+            <p class="text-gray-500">
+                Enjoy delicious food prepared with fresh ingredients.
+            </p>
+        </div>
+
+        <div class="bg-white p-8 rounded-2xl shadow-sm text-center hover:shadow-lg transition">
+            <div class="text-5xl mb-5">🚀</div>
+            <h3 class="text-xl font-bold mb-3">Fast Delivery</h3>
+            <p class="text-gray-500">
+                Get your favourite meals delivered to your doorstep.
+            </p>
+        </div>
+
+        <div class="bg-white p-8 rounded-2xl shadow-sm text-center hover:shadow-lg transition">
+            <div class="text-5xl mb-5">❤️</div>
+            <h3 class="text-xl font-bold mb-3">Made With Love</h3>
+            <p class="text-gray-500">
+                Every meal is prepared to make your day more special.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- POPULAR FOOD -->
+<section class="bg-orange-50 py-20">
+    <div class="max-w-7xl mx-auto px-6">
+
+        <div class="text-center mb-12">
+            <p class="text-red-600 font-semibold">OUR SPECIALITIES</p>
+            <h2 class="text-4xl font-bold mt-3">Popular Food Items</h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600"
+                     class="w-full h-56 object-cover" alt="Burger">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold">Cheese Burger</h3>
+                    <p class="text-gray-500 mt-2">Delicious and freshly prepared.</p>
+                    <p class="text-red-600 font-bold mt-4">₹149</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
+                <img src="https://images.unsplash.com/photo-1633945274405-b6c8069047b0?w=600"
+                     class="w-full h-56 object-cover" alt="Biryani">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold">Chicken Biryani</h3>
+                    <p class="text-gray-500 mt-2">Rich flavours in every bite.</p>
+                    <p class="text-red-600 font-bold mt-4">₹249</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
+                <img src="https://images.unsplash.com/photo-1579751626657-72bc17010498?w=600"
+                     class="w-full h-56 object-cover" alt="Pizza">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold">Margherita Pizza</h3>
+                    <p class="text-gray-500 mt-2">Cheesy, tasty and satisfying.</p>
+                    <p class="text-red-600 font-bold mt-4">₹199</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="{% url 'menu' %}"
+               class="inline-block bg-red-600 text-white px-8 py-3 rounded-full hover:bg-red-700">
+                View Full Menu →
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<!-- CALL TO ACTION -->
+<section class="bg-red-600 py-16 text-center text-white px-6">
+    <h2 class="text-3xl md:text-4xl font-bold">
+        Hungry? Let's Order Something Delicious!
+    </h2>
+
+    <p class="mt-4 text-red-100">
+        Your favourite food is waiting for you.
+    </p>
+
+    <a href="{% url 'menu' %}"
+       class="inline-block bg-white text-red-600 px-8 py-3 rounded-full font-bold mt-7 hover:bg-orange-100">
+        Order Now
+    </a>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-950 text-gray-400 py-8 text-center">
+    <h2 class="text-2xl font-bold text-white mb-3">
+        TOMOTO<span class="text-red-500">.</span>
+    </h2>
+
+    <p>Fresh Food. Fast Delivery. Happy Moments.</p>
+
+    <p class="mt-5 text-sm">
+        © 2026 TOMOTO. All Rights Reserved.
+    </p>
+</footer>
+
+</body>
+</html>

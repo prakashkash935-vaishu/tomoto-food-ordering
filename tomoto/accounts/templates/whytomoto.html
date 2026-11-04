@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Tomoto - Our Mission & Core Values</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        tomoto: {
+                            50: '#fff1f1',
+                            100: '#ffdfdf',
+                            500: '#ff3b30',
+                            600: '#e02217',
+                            700: '#b8160c',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans antialiased selection:bg-tomoto-500 selection:text-white">
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 glass-nav border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+
+            <!-- Logo back to Home -->
+            <a href="{% url 'index' %}" class="flex items-center space-x-2 group">
+                <div
+                    class="w-10 h-10 rounded-2xl bg-tomoto-500 flex items-center justify-center text-white text-2xl shadow-lg shadow-tomoto-500/30 group-hover:scale-105 transition-transform">
+                    🍅
+                </div>
+                <span class="text-2xl font-extrabold tracking-tight text-gray-900">tomoto</span>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-600">
+                <a href="{% url 'index' %}" class="hover:text-tomoto-500 transition-colors">Home</a>
+                <a href="#story" class="hover:text-tomoto-500 transition-colors">Our Story</a>
+                <a href="#features" class="hover:text-tomoto-500 transition-colors">Core Pillars</a>
+                <a href="#partners" class="hover:text-tomoto-500 transition-colors">Partner With Us</a>
+            </nav>
+
+            <!-- Action -->
+            <div class="flex items-center space-x-4">
+                <a href="{% url 'index' %}"
+                    class="px-5 py-2.5 text-sm font-bold text-white bg-tomoto-500 hover:bg-tomoto-600 rounded-full shadow-md transition-all">
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden py-20 lg:py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
+            <div
+                class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-tomoto-50 border border-tomoto-100 text-tomoto-600 text-sm font-semibold mb-6">
+                <span>✨ The Tomoto Standard</span>
+            </div>
+            <h1 class="text-4xl sm:text-6xl font-extrabold text-gray-900 leading-tight">
+                More than delivery. <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-tomoto-500 to-orange-500">We deliver
+                    happiness.</span>
+            </h1>
+            <p class="mt-6 text-lg text-gray-600">
+                At Tomoto, we believe food is an experience. We’ve built a cutting-edge platform connecting food lovers
+                with the finest local kitchens, ensuring freshness, speed, and absolute satisfaction.
+            </p>
+        </div>
+    </section>
+
+    <!-- Our Story Section -->
+    <section id="story" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-extrabold text-gray-900 mb-4">Born from a passion for great food &
+                        lightning-fast tech.</h2>
+                    <p class="text-gray-600 leading-relaxed mb-4">
+                        Founded in 2026, Tomoto started with a simple frustration: why should getting great food hot and
+                        fresh take guesswork? We set out to streamline local food delivery by bridging local culinary
+                        creators and hungry customers through smart dispatch algorithms.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed">
+                        Today, we power thousands of daily orders across cities, partnering with independent restaurants
+                        and top chefs to elevate everyday dining.
+                    </p>
+                    <div class="mt-8 grid grid-cols-2 gap-6">
+                        <div class="p-4 bg-white rounded-2xl shadow-sm border border-gray-100">
+                            <p class="text-3xl font-extrabold text-tomoto-500">99.8%</p>
+                            <p class="text-xs text-gray-500 mt-1 font-medium">On-Time Delivery Success</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-2xl shadow-sm border border-gray-100">
+                            <p class="text-3xl font-extrabold text-tomoto-500">15m+</p>
+                            <p class="text-xs text-gray-500 mt-1 font-medium">Meals Delivered</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80"
+                        alt="Fresh Food Spread" class="rounded-3xl shadow-2xl w-full h-[400px] object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Pillars Section -->
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-3xl font-extrabold text-gray-900">Our 4 Core Pillars</h2>
+                <p class="mt-2 text-gray-600">The standards we live by every single day.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+                <!-- Pillar 1 -->
+                <div
+                    class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-tomoto-200 transition-all group">
+                    <div
+                        class="w-14 h-14 bg-tomoto-500 text-white rounded-2xl flex items-center justify-center text-xl mb-6 shadow-md shadow-tomoto-500/30 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-gauge-high"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Lightning Dispatch</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Our routing algorithm pairs your order with the
+                        closest driver instantly to cut down wait times.</p>
+                </div>
+
+                <!-- Pillar 2 -->
+                <div
+                    class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-tomoto-200 transition-all group">
+                    <div
+                        class="w-14 h-14 bg-tomoto-500 text-white rounded-2xl flex items-center justify-center text-xl mb-6 shadow-md shadow-tomoto-500/30 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Rigorous Hygiene</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Every partner kitchen passes strict food safety and
+                        cleanliness audits before listing on Tomoto.</p>
+                </div>
+
+                <!-- Pillar 3 -->
+                <div
+                    class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-tomoto-200 transition-all group">
+                    <div
+                        class="w-14 h-14 bg-tomoto-500 text-white rounded-2xl flex items-center justify-center text-xl mb-6 shadow-md shadow-tomoto-500/30 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Farm to Kitchen</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">We empower restaurants that source fresh, locally
+                        grown organic ingredients for superior taste.</p>
+                </div>
+
+                <!-- Pillar 4 -->
+                <div
+                    class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-tomoto-200 transition-all group">
+                    <div
+                        class="w-14 h-14 bg-tomoto-500 text-white rounded-2xl flex items-center justify-center text-xl mb-6 shadow-md shadow-tomoto-500/30 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">24/7 Live Support</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Got a question or issue with your order? Our
+                        support team is available round-the-clock.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Partner With Us Banner -->
+    <section id="partners" class="py-16 bg-gradient-to-r from-tomoto-500 to-orange-500 text-white">
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+            <div>
+                <h2 class="text-3xl font-extrabold">Own a Restaurant or Dark Kitchen?</h2>
+                <p class="mt-2 text-white/90">Partner with Tomoto and expand your reach to thousands of hungry foodies
+                    in your city.</p>
+            </div>
+            <a href="{% url 'index' %}"
+                class="bg-black hover:bg-gray-900 text-white font-bold px-8 py-4 rounded-2xl shadow-xl transition-all whitespace-nowrap">
+                Join as Partner
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12">
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between text-xs">
+            <p>&copy; 2026 Tomoto Food Tech Inc. All rights reserved.</p>
+            <div class="flex space-x-6 mt-4 md:mt-0">
+                <a href="{% url 'index' %}" class="hover:text-white">Home</a>
+                <a href="#" class="hover:text-white">Privacy Policy</a>
+                <a href="#" class="hover:text-white">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

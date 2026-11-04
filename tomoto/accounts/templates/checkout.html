@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOMOTO - Checkout</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #fffaf5;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(120deg, #f97316, #ef4444);
+        }
+
+        .form-input {
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #f97316;
+            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.12);
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+
+        <a href="{% url 'index' %}" class="text-3xl font-extrabold text-orange-500">
+            TOMOTO 🍅
+        </a>
+
+        <div class="flex items-center gap-6">
+
+            {% if user.is_authenticated %}
+                <span class="text-orange-500 font-bold">
+                    Hi, {{ user.username }} 👋
+                </span>
+
+                <a href="{% url 'logout' %}"
+                   class="text-red-600 font-semibold hover:text-red-800">
+                    Logout
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}"
+                   class="text-gray-700 font-semibold">
+                    Login
+                </a>
+            {% endif %}
+
+            <a href="{% url 'cart' %}"
+               class="text-gray-700 font-semibold hover:text-orange-500">
+                ← Back to Cart
+            </a>
+
+        </div>
+
+    </div>
+</nav>
+
+
+<!-- Hero Section -->
+<section class="gradient-bg text-white text-center py-12 px-4">
+
+    <p class="text-sm uppercase tracking-widest font-semibold mb-3">
+        One Last Step
+    </p>
+
+    <h1 class="text-4xl md:text-5xl font-extrabold">
+        Secure Checkout 🛒
+    </h1>
+
+    <p class="mt-4 text-white/90">
+        Enter your delivery details and enjoy your favourite food.
+    </p>
+
+</section>
+
+
+<!-- Checkout Section -->
+<section class="max-w-7xl mx-auto px-5 md:px-8 py-12">
+
+    {% for message in messages %}
+        <div class="bg-red-50 border border-red-200 text-red-600 rounded-xl p-4 mb-6 text-center">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- Delivery Form -->
+        <div class="lg:col-span-2">
+
+            <div class="bg-white rounded-3xl shadow-sm p-6 md:p-9">
+
+                <div class="mb-8">
+                    <span class="text-orange-500 font-bold text-sm uppercase tracking-wider">
+                        Step 01
+                    </span>
+
+                    <h2 class="text-2xl font-extrabold text-gray-900 mt-2">
+                        Delivery Information
+                    </h2>
+
+                    <p class="text-gray-500 text-sm mt-2">
+                        Please provide your correct delivery details.
+                    </p>
+                </div>
+
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <!-- Full Name -->
+                    <div class="mb-5">
+                        <label class="block font-semibold text-gray-700 mb-2">
+                            Full Name
+                        </label>
+
+                        <input
+                            name="customer_name"
+                            type="text"
+                            placeholder="Enter your full name"
+                            value="{{ user.username }}"
+                            required
+                            class="form-input w-full border border-gray-200 rounded-xl p-4 bg-gray-50">
+                    </div>
+
+
+                    <!-- Mobile Number -->
+                    <div class="mb-5">
+                        <label class="block font-semibold text-gray-700 mb-2">
+                            Mobile Number
+                        </label>
+
+                        <input
+                            name="phone"
+                            type="tel"
+                            maxlength="10"
+                            pattern="[0-9]{10}"
+                            placeholder="Enter 10 digit mobile number"
+                            required
+                            class="form-input w-full border border-gray-200 rounded-xl p-4 bg-gray-50">
+                    </div>
+
+
+                    <!-- Address -->
+                    <div class="mb-5">
+                        <label class="block font-semibold text-gray-700 mb-2">
+                            Delivery Address
+                        </label>
+
+                        <textarea
+                            name="address"
+                            rows="4"
+                            placeholder="House number, street, area..."
+                            required
+                            class="form-input w-full border border-gray-200 rounded-xl p-4 bg-gray-50"></textarea>
+                    </div>
+
+
+                    <!-- City and Pincode -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-7">
+
+                        <div>
+                            <label class="block font-semibold text-gray-700 mb-2">
+                                City
+                            </label>
+
+                            <input
+                                name="city"
+                                type="text"
+                                placeholder="Enter your city"
+                                required
+                                class="form-input w-full border border-gray-200 rounded-xl p-4 bg-gray-50">
+                        </div>
+
+
+                        <div>
+                            <label class="block font-semibold text-gray-700 mb-2">
+                                Pincode
+                            </label>
+
+                            <input
+                                name="pincode"
+                                type="text"
+                                maxlength="6"
+                                pattern="[0-9]{6}"
+                                placeholder="6 digit pincode"
+                                required
+                                class="form-input w-full border border-gray-200 rounded-xl p-4 bg-gray-50">
+                        </div>
+
+                    </div>
+
+
+                    <!-- Payment Method -->
+                    <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5 mb-7">
+
+                        <h3 class="font-bold text-gray-900 text-lg mb-4">
+                            💳 Select Payment Method
+                        </h3>
+
+                        <div class="space-y-3">
+
+                            <label class="flex items-center gap-3 bg-white p-4 rounded-xl border cursor-pointer hover:border-orange-400">
+                                <input type="radio" name="payment_method" value="Cash on Delivery" checked>
+                                <span>💵 Cash on Delivery</span>
+                            </label>
+
+                            <label class="flex items-center gap-3 bg-white p-4 rounded-xl border cursor-pointer hover:border-orange-400">
+                                <input type="radio" name="payment_method" value="Google Pay">
+                                <span>📱 Google Pay</span>
+                            </label>
+
+                            <label class="flex items-center gap-3 bg-white p-4 rounded-xl border cursor-pointer hover:border-orange-400">
+                                <input type="radio" name="payment_method" value="PhonePe">
+                                <span>🟣 PhonePe</span>
+                            </label>
+
+                            <label class="flex items-center gap-3 bg-white p-4 rounded-xl border cursor-pointer hover:border-orange-400">
+                                <input type="radio" name="payment_method" value="Paytm">
+                                <span>🔵 Paytm</span>
+                            </label>
+
+                            <label class="flex items-center gap-3 bg-white p-4 rounded-xl border cursor-pointer hover:border-orange-400">
+                                <input type="radio" name="payment_method" value="Debit / Credit Card">
+                                <span>💳 Debit / Credit Card</span>
+                            </label>
+
+                        </div>
+
+                        <p class="text-xs text-gray-500 mt-4">
+                            Demo payment only. No real money will be charged.
+                        </p>
+
+                    </div>
+
+
+                    <!-- Place Order -->
+                    <button
+                        type="submit"
+                        class="gradient-bg hover:opacity-90 text-white font-bold py-4 rounded-2xl w-full shadow-lg shadow-orange-200 transition">
+
+                        Place Order →
+                    </button>
+
+                    <p class="text-center text-gray-400 text-xs mt-4">
+                        🔒 Your delivery information is submitted securely.
+                    </p>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- Order Summary -->
+        <div>
+
+            <div class="bg-white rounded-3xl shadow-sm p-6 md:p-7 sticky top-28">
+
+                <h2 class="text-2xl font-extrabold text-gray-900 mb-2">
+                    Order Summary
+                </h2>
+
+                <p class="text-gray-500 text-sm mb-6">
+                    Review your selected food items.
+                </p>
+
+
+                <!-- Items -->
+                {% for key, item in cart_items.items %}
+
+                <div class="flex justify-between items-center gap-3 border-b border-gray-100 py-4">
+
+                    <div>
+                        <p class="font-semibold text-gray-800">
+                            {{ item.name }}
+                        </p>
+
+                        <p class="text-sm text-gray-500 mt-1">
+                            Quantity: {{ item.quantity }}
+                        </p>
+                    </div>
+
+                    <span class="font-bold text-gray-800 whitespace-nowrap">
+                        ₹{% widthratio item.price 1 item.quantity %}
+                    </span>
+
+                </div>
+
+                {% endfor %}
+
+
+                <!-- Total -->
+                <div class="bg-orange-50 rounded-2xl p-5 mt-6">
+
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600 font-semibold">
+                            Delivery Fee
+                        </span>
+
+                        <span class="text-green-600 font-bold">
+                            FREE
+                        </span>
+                    </div>
+
+                    <hr class="border-orange-100 my-4">
+
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-bold text-gray-900">
+                            Total Amount
+                        </span>
+
+                        <span class="text-3xl font-extrabold text-orange-600">
+                            ₹{{ total }}
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <a href="{% url 'cart' %}"
+                   class="block text-center text-orange-600 font-semibold mt-7 hover:text-red-500">
+                    ← Edit Your Cart
+                </a>
+
+
+                <div class="text-center mt-6 text-gray-400 text-xs">
+                    🍅 Fresh Food. Fast Delivery.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- Footer -->
+<footer class="bg-gray-950 text-white text-center py-9 px-4">
+
+    <h2 class="text-2xl font-extrabold text-orange-500">
+        TOMOTO 🍅
+    </h2>
+
+    <p class="text-gray-400 mt-3 text-sm">
+        Fresh Food. Fast Delivery. Happy Moments.
+    </p>
+
+    <p class="text-gray-500 text-xs mt-4">
+        © 2026 TOMOTO. All Rights Reserved.
+    </p>
+
+</footer>
+
+</body>
+</html>
